@@ -21,12 +21,14 @@
             @foreach ($messages as $message)
                 @if ($message['sender'] != auth()->user()->name)
                     <div class="clearfix w-4/4">
+                        {{-- <input type="file"> --}}
                         <div class="bg-gray-300 mx-4 my-2 rounded-lg inline-block px-3 py-1">{{ $message['message'] }}
                         </div>
                     </div>
                 @else
                     <div class="clearfix w-4/4">
                         <div class="text-right">
+                            {{-- <input type="file"> --}}
                             <p class="bg-green-300 mx-4 my-2 rounded-lg inline-block px-3 py-1">
                                 {{ $message['message'] }} </p>
                         </div>
