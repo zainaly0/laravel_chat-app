@@ -53,6 +53,7 @@ class ChatComponent extends Component
         if($validator->fails()){
             return;
         }
+        +
 
         $chatMessage = new Message();
         $chatMessage->sender_id = $this->sender_id;

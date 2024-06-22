@@ -1,3 +1,5 @@
+
+
 <div>
     <div style="overscroll-behavior: none;">
         <div class="fixed w-full bg-green-400 h-16 pt-2 text-white flex justify-between shadow-md"
@@ -6,7 +8,7 @@
             <a href="/dashboard">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-12 h-12 my-1 text-green-100 ml-2">
                     <path class="text-green-100 fill-current"
-                        d="M9.41 11H17a1 1 0 0 1 0 2H9.41l2.3 2.3a1 1 0 1 1-1.42 1.4l-4-4a1 1 0 0 1 0-1.4l4-4a1 1 0 0 1 1.42 1.4L9.4 11z" />
+                        d="M9.41 11H17a1 1 0 0 x1 0 2H9.41l2.3 2.3a1 1 0 1 1-1.42 1.4l-4-4a1 1 0 0 1 0-1.4l4-4a1 1 0 0 1 1.42 1.4L9.4 11z" />
                 </svg>
             </a>
             <div class="my-3 text-green-100 font-bold text-lg tracking-wide">{{ $user->name }}</div>
@@ -42,6 +44,15 @@
 
     <form wire:submit="sendMessage()">
         <div class="fixed w-full flex justify-between bg-green-100" style="bottom: 0px;">
+            <div class="">
+                {{-- <h1 class="font-semibold text-6xl">+</h1> --}}
+                <div id="input_fields" class=" font-semibold text-6xl cursor-pointer">
+                    +
+                    {{-- <input type="file"> --}}
+                    {{-- <input type="image"> --}}
+                    {{-- <input type="pdf"> --}}
+                </div>
+            </div>
             <textarea class="flex-grow m-2 py-2 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none"
                 rows="1" wire:model="message" placeholder="Message..." style="outline: none;"></textarea>
             <button class="m-2" type="submit" style="outline: none;">
@@ -55,3 +66,14 @@
         </div>
     </form>
 </div>
+
+
+@push('scripts')
+        <script>
+            $(document).ready(function() {
+                $("#input_fields").click(function() {
+                    console.log('mullah');
+                });
+            });
+        </script>
+    @endpush

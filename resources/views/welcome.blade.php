@@ -29,10 +29,12 @@
         <div class="baby2">
             <button class="btn btn-primary"><a href="http://127.0.0.1:8000/login" class=" text-light">Login<a> </button>
                 <button class="btn btn-secondary text-light"><a href="http://127.0.0.1:8000/register"
-                        class="text-light">Register<a>
-                </button>
-        </div>
-    </div>
+                    class="text-light">Register<a>
+                    </button>
+                </div>
+            </div>
+            
+           
 
 </body>
 
