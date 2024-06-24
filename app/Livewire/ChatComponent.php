@@ -17,60 +17,62 @@ class ChatComponent extends Component
     public $receiver_id;
     public $message = '';
     public $messages = [];
+    public $file;
 
     public function render()
     {
         return view('livewire.chat-component');
     }
 
-    public function mount($user_id){
+    public function mount($user_id)
+    {
 
         $this->sender_id = auth()->user()->id;
         $this->receiver_id = $user_id;
 
-        $messages = Message::where(function($query){
+        $messages = Message::where(function ($query) {
             $query->where('sender_id', $this->sender_id)
-                  ->where('receiver_id', $this->receiver_id);
-        })->orWhere(function($query){
+                ->where('receiver_id', $this->receiver_id);
+        })->orWhere(function ($query) {
             $query->where('sender_id', $this->receiver_id)
-                  ->where('receiver_id', $this->sender_id);
+                ->where('receiver_id', $this->sender_id);
         })
-        ->with('sender:id,name', 'receiver:id,name')
-        ->get();
+            ->with('sender:id,name', 'receiver:id,name')
+            ->get();
 
-        foreach($messages as $message){
+        foreach ($messages as $message) {
             $this->appendChatMessage($message);
         }
 
         $this->user = User::whereId($user_id)->first();
     }
 
-    public function sendMessage(){
-        $validator = Validator::make(['message' => $this->message], [
-            'message' => ['required',  new NoBlankSpace, 'min:1']
+    public function sendMessage()
+    {
+        $validator = Validator::make(['message' => $this->message, 'file' => $this->file], [
+            'message' => ['required',  new NoBlankSpace, 'min:1'],
+            'file' => ['nullable', 'mimes:jpeg,png,jpg,gif,mp3,wav,mp4,avi,doc,docx,pdf', 'max:10240']
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return;
         }
-        +
-
-        $chatMessage = new Message();
+        +$chatMessage = new Message();
         $chatMessage->sender_id = $this->sender_id;
         $chatMessage->receiver_id = $this->receiver_id;
         $chatMessage->message = $this->message;
         $chatMessage->save();
 
         $this->appendChatMessage($chatMessage);
-        
+
         broadcast(new MessageSendEvent($chatMessage))->toOthers();
 
         $this->message = '';
-
     }
 
     #[On('echo-private:chat-channel.{sender_id},MessageSendEvent')]
-    public function listenForMessage($event){
+    public function listenForMessage($event)
+    {
         $chatMessage = Message::whereId($event['message']['id'])
             ->with('sender:id,name', 'receiver:id,name')
             ->first();
@@ -79,7 +81,8 @@ class ChatComponent extends Component
     }
 
 
-    public function appendChatMessage($message){
+    public function appendChatMessage($message)
+    {
         $this->messages[] = [
             'id' => $message->id,
             'message' => $message->message,
@@ -87,5 +90,4 @@ class ChatComponent extends Component
             'receiver' => $message->receiver->name
         ];
     }
-
 }

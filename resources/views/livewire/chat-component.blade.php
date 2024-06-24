@@ -1,5 +1,3 @@
-
-
 <div>
     <div style="overscroll-behavior: none;">
         <div class="fixed w-full bg-green-400 h-16 pt-2 text-white flex justify-between shadow-md"
@@ -42,15 +40,13 @@
         </div>
     </div>
 
-    <form wire:submit="sendMessage()">
+    <form wire:submit="sendMessage()" enctype="multipart/form-data">
         <div class="fixed w-full flex justify-between bg-green-100" style="bottom: 0px;">
             <div class="">
-                {{-- <h1 class="font-semibold text-6xl">+</h1> --}}
-                <div id="input_fields" class=" font-semibold text-6xl cursor-pointer">
-                    +
-                    {{-- <input type="file"> --}}
-                    {{-- <input type="image"> --}}
-                    {{-- <input type="pdf"> --}}
+                <h1 class="fileSend_button font-semibold text-6xl cursor-pointer">+</h1>
+                <div id="input_fields" class="">
+                    {{-- <input type="file" name="file" id="file" accept="application/pdf, image/*, video/*"> --}}
+                    <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png, .gif, .mp3, .wav, .mp4, .mkv, .avi, .doc, .docx, .pdf"">
                 </div>
             </div>
             <textarea class="flex-grow m-2 py-2 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none"
@@ -71,9 +67,9 @@
 @push('scripts')
         <script>
             $(document).ready(function() {
-                $("#input_fields").click(function() {
+                $("#fileSend_button").click(function() {
                     console.log('mullah');
                 });
             });
         </script>
-    @endpush
+@endpush
