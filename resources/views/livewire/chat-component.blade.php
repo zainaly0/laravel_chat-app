@@ -22,7 +22,8 @@
                 @if ($message['sender'] != auth()->user()->name)
                     <div class="clearfix w-4/4">
                         {{-- <input type="file"> --}}
-                        <div class="bg-gray-300 mx-4 my-2 rounded-lg inline-block px-3 py-1">{{ $message['message'] }}
+                        <div class="bg-gray-300 mx-4 my-2 rounded-lg inline-block px-3 py-1">
+                            {{ $message['message'] }}{{ $message['file'] }}
                         </div>
                     </div>
                 @else
@@ -30,7 +31,7 @@
                         <div class="text-right">
                             {{-- <input type="file"> --}}
                             <p class="bg-green-300 mx-4 my-2 rounded-lg inline-block px-3 py-1">
-                                {{ $message['message'] }} </p>
+                                {{ $message['message'] }}{{ $message['file'] }} </p>
                         </div>
                     </div>
                 @endif
@@ -40,17 +41,14 @@
         </div>
     </div>
 
-    <form wire:submit="sendMessage()" enctype="multipart/form-data">
+    <form wire:submit.prevent="sendMessage" enctype="multipart/form-data">
         <div class="fixed w-full flex justify-between bg-green-100" style="bottom: 0px;">
-            <div class="">
-                <h1 class="fileSend_button font-semibold text-6xl cursor-pointer">+</h1>
-                <div id="input_fields" class="">
-                    {{-- <input type="file" name="file" id="file" accept="application/pdf, image/*, video/*"> --}}
-                    <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png, .gif, .mp3, .wav, .mp4, .mkv, .avi, .doc, .docx, .pdf"">
-                </div>
-            </div>
-            <textarea class="flex-grow m-2 py-2 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none"
-                rows="1" wire:model="message" placeholder="Message..." style="outline: none;"></textarea>
+
+            {{-- <input type="file" wire:model="file" > --}}
+            <input type="file" name="file" wire:model="file" id="file" accept=".jpg, .jpeg, .png, .gif, .mp3, .wav, .mp4, .mkv, .avi, .doc, .docx, .pdf">
+
+
+            <textarea class="flex-grow m-2 py-2 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none" rows="1" wire:model="message" placeholder="Message..." style="outline: none;"></textarea>
             <button class="m-2" type="submit" style="outline: none;">
                 <svg class="svg-inline--fa text-green-400 fa-paper-plane fa-w-16 w-12 h-12 py-2 mr-2" aria-hidden="true"
                     focusable="false" data-prefix="fas" data-icon="paper-plane" role="img"
@@ -65,11 +63,11 @@
 
 
 @push('scripts')
-        <script>
-            $(document).ready(function() {
-                $("#fileSend_button").click(function() {
-                    console.log('mullah');
-                });
+    <script>
+        $(document).ready(function() {
+            $("#fileSend_button").click(function() {
+            
             });
-        </script>
+        });
+    </script>
 @endpush
