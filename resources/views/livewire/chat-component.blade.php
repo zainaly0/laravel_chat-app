@@ -23,7 +23,12 @@
                     <div class="clearfix w-4/4">
                         {{-- <input type="file"> --}}
                         <div class="bg-gray-300 mx-4 my-2 rounded-lg inline-block px-3 py-1">
-                            {{ $message['message'] }}{{ $message['file'] }}
+                            {{ $message['message'] }} <br>
+                            @if ($message['file'])
+                                <img  src="{{ asset('storage/' . $message['file']) }}" alt="Image" width="100px"
+                                    height="100px">
+                            @endif
+
                         </div>
                     </div>
                 @else
@@ -31,7 +36,11 @@
                         <div class="text-right">
                             {{-- <input type="file"> --}}
                             <p class="bg-green-300 mx-4 my-2 rounded-lg inline-block px-3 py-1">
-                                {{ $message['message'] }}{{ $message['file'] }} </p>
+                                {{ $message['message'] }} <br>
+                                @if ($message['file'])
+                                <img  src="{{ asset('storage/' . $message['file']) }}" alt="Image" width="100px" height="100px">
+                            @endif
+                            </p>
                         </div>
                     </div>
                 @endif
@@ -45,10 +54,12 @@
         <div class="fixed w-full flex justify-between bg-green-100" style="bottom: 0px;">
 
             {{-- <input type="file" wire:model="file" > --}}
-            <input type="file" name="file" wire:model="file" id="file" accept=".jpg, .jpeg, .png, .gif, .mp3, .wav, .mp4, .mkv, .avi, .doc, .docx, .pdf">
+            <input type="file" name="file" wire:model="file" id="file"
+                accept=".jpg, .jpeg, .png, .gif, .mp3, .wav, .mp4, .mkv, .avi, .doc, .docx, .pdf">
 
 
-            <textarea class="flex-grow m-2 py-2 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none" rows="1" wire:model="message" placeholder="Message..." style="outline: none;"></textarea>
+            <textarea class="flex-grow m-2 py-2 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none"
+                rows="1" wire:model="message" placeholder="Message..." style="outline: none;"></textarea>
             <button class="m-2" type="submit" style="outline: none;">
                 <svg class="svg-inline--fa text-green-400 fa-paper-plane fa-w-16 w-12 h-12 py-2 mr-2" aria-hidden="true"
                     focusable="false" data-prefix="fas" data-icon="paper-plane" role="img"
@@ -66,7 +77,7 @@
     <script>
         $(document).ready(function() {
             $("#fileSend_button").click(function() {
-            
+
             });
         });
     </script>

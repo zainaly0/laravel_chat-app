@@ -52,7 +52,7 @@ class ChatComponent extends Component
     public function sendMessage()
     {
         $validator = Validator::make(['message' => $this->message, 'file' => $this->file], [
-            'message' => ['nullable',  new NoBlankSpace, 'min:1'],
+            'message' => ['nullable', new NoBlankSpace, 'min:1'],
             'file' => ['nullable', 'mimes:jpeg,png,jpg,gif,mp3,wav,mp4,avi,doc,docx,pdf', 'max:10240']
         ]);
 
@@ -60,17 +60,21 @@ class ChatComponent extends Component
             return;
         }
 
+        $trimmedMessage = trim($this->message) != "";   // it return zero 
+       
         $chatMessage = new Message();
         $chatMessage->sender_id = $this->sender_id;
         $chatMessage->receiver_id = $this->receiver_id;
         $chatMessage->message = $this->message;
-        if ($this->file) {
+
+        if($this->file){
             $filename = time() . "_" . $this->file->getClientOriginalName();
-            $filePath = $this->file->storeAs('uploads', $filename);
+            $filePath = $this->file->storeAs('images', $filename);
             $chatMessage->file = $filePath;
         }
 
         $chatMessage->save();
+
 
         $this->appendChatMessage($chatMessage);
         broadcast(new MessageSendEvent($chatMessage))->toOthers();
